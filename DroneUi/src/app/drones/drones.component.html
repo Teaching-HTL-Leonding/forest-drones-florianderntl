@@ -1,0 +1,29 @@
+<h1>Drones</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Active</th>
+            <th>Location</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let drone of drones">
+            <th>{{ drone.id }}</th>
+            <td>
+                <input type="checkbox" class="form-check-input" name="checkboxActive{{ drone.id }}" [(ngModel)]="drone.isActive" disabled>
+            </td>
+            <td>
+                <span *ngIf="drone.position">
+                    x: {{ drone.position.x }},
+                    y: {{ drone.position.y }}
+                </span>
+            </td>
+            <td>
+                <button class="btn btn-primary" routerLink="/drones/{{ drone.id }}">Details</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,54 @@
+<h1 class="mb-4">Drone {{ droneId }}</h1>
+
+<ul>
+    <li>
+        Status: {{ getStatus() }}
+        <button class="btn btn-outline-primary ms-2" (click)="activateDrone()">{{ getButtonStatus() }}</button>
+    </li>
+    <li *ngIf="drone?.position">
+        X: {{ drone?.position!.x }}, Y: {{ drone?.position!.y }}
+    </li>
+</ul>
+
+<div *ngIf="drone?.isActive">
+    <h2 class="my-4">Fly To</h2>
+
+    <div class="mb-3">
+        <label for="inputX" class="form-label">X</label>
+        <input type="number" class="form-control" name="inputX" id="inputX" [(ngModel)]="x">
+    </div>
+    <div class="mb-3">
+        <label for="inputY" class="form-label">Y</label>
+        <input type="number" class="form-control" name="inputY" id="inputY" [(ngModel)]="y">
+    </div>
+    <button class="btn btn-primary" (click)="fly()">Fly</button>
+    <button class="btn btn-primary ms-2" (click)="flyAndScan()">Fly & Scan</button>
+
+    <h2 class="my-4">Tree Scanner <button class="btn btn-outline-primary ms-2" (click)="scan()">Scan</button></h2>
+
+    <div *ngIf="nearestTreeIx !== undefined">
+        <h3 class="my-4">Nearest tree</h3>
+
+        <p>X: {{ trees[nearestTreeIx].x }}, Y: {{ trees[nearestTreeIx].y }}</p>
+        <button class="btn btn-primary mb-4" (click)="markTreeAsExamined(nearestTreeIx)">Mark examined</button>
+    
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Position</th>
+                    <th>Examine</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tree of trees; let ix = index">
+                    <td>{{ ix + 1 }}</td>
+                    <td>X: {{ tree.x }}, Y: {{ tree.y }}</td>
+                    <td>
+                        <button class="btn btn-primary" (click)="markTreeAsExamined(ix)">Mark examined</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
